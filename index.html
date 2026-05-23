@@ -516,7 +516,35 @@ const rawSlots = [
         bio: "Elizabeth graduated from Hunter College (CUNY), with a B.A. in psychology. While at Hunter, she was a Minority Access to Research and Career (MARC) and then a Minority Biomedical Research Support (MBRS) scholar. For three years she worked in Cheryl Harding's neuro-endocrinology laboratory studying song-learning and sexual behaviors in zebra finches. While a MARC/MBRS scholar, Elizabeth also participated twice in the Summer Program for Under-Represented Students at Columbia University. In Prof. Silver's laboratory, Elizabeth assessed suprachiasmatic nucleus activation by a light-pulse when mice were aroused during their normal resting time. She also mapped the distribution of neuro-immune mast cells during brain development in baseline conditions.", 
         abstract: "I arrived in New York from the Dominican Republic at 13, carrying hopes I could not yet name. One year later, before high school began, I became a mother. My daughter became my greatest source of strength and my reason to keep going. Around that time, my younger sister began showing signs of schizophrenia, while we lived in a one-bedroom apartment in public housing. In the face of uncertainty and responsibility far beyond my years, I made a promise: I would understand mental illness at its core, and I would build a different future for my daughter. That promise carried me through every obstacle. I became the first in my family to graduate high school, the first to earn a college degree, and, thanks to Columbia’s Bridge to Ph.D. Program, the first to obtain a Ph.D. in neuroscience. Each milestone represented more than achievement; it represented survival, perseverance, and the refusal to let circumstance define my life. Today, as a Senior Manager in regulatory affairs at a top pharmaceutical company, I carry that same purpose forward, helping advance medicines that can change and save lives." 
     }, 
-    { start: "15:15", end: "16:00", display: "03:15 PM - 04:00 PM", type: "special", title: "Alumni Panel", speaker: "Chukwudi Onyemekwu (Cohort 1), Shaness Grenald (Cohort 2), Iris Ponce (Cohort 11), Talha Rehman (Cohort 12)" }, 
+    {
+    start: "15:15",
+    end: "16:00",
+    display: "03:15 PM - 04:00 PM",
+    type: "panel",
+    title: "Alumni Panel",
+    panelists: [
+        {
+            name: "Chukwudi Onyemekwu",
+            cohort: "Cohort 1",
+            bio: "Bio for Chukwudi Onyemekwu goes here."
+        },
+        {
+            name: "Shaness Grenald",
+            cohort: "Cohort 2",
+            bio: "Bio for Shaness Grenald goes here."
+        },
+        {
+            name: "Iris Ponce",
+            cohort: "Cohort 11",
+            bio: "Bio for Iris Ponce goes here."
+        },
+        {
+            name: "Talha Rehman",
+            cohort: "Cohort 12",
+            bio: "Bio for Talha Rehman goes here."
+        }
+    ]
+},
     { start: "16:00", end: "16:30", display: "04:00 PM - 04:30 PM", type: "closing", title: "Closing Remarks", speakers: [ { name: "Professor Dima Amso", link: "https://psychology.columbia.edu/content/dima-amso" }, { name: "Professor Dennis Mitchell", link: "https://www.dental.columbia.edu/profile/dennis-mitchell-dds" }, { name: "Professor Marcel Agüeros", link: "https://www.astro.columbia.edu/content/marcel-agueros" } ] }     
 ]; 
 
@@ -600,6 +628,46 @@ rawSlots.forEach((slot) => {
         <div id="photos-${internalSlotId}" class="drawer-pane bio-pane">
             ${photoHtml}
         </div>
+    `;
+	} else if (slot.type === "panel") {
+    sessionDiv.className = 'session special-block';
+
+    const internalSlotId = presentationCounter++;
+
+    const panelHtml = slot.panelists.map((p, i) => `
+        <div style="margin-bottom: 1rem;">
+            <button class="presenter-btn"
+                onclick="toggleDrawer('${internalSlotId}-p${i}', 'bio')"
+                aria-expanded="false"
+                aria-controls="bio-${internalSlotId}-p${i}">
+                
+                <p class="presenter">
+                    <span class="presenter-name">
+                        ${p.name} <span style="font-weight:400; color:var(--text-muted);">
+                        (${p.cohort})
+                        </span>
+                    </span>
+                </p>
+
+				<span class="indicator" id="ind-bio-${internalSlotId}-p${i}">
+			</button>
+
+            <div id="bio-${internalSlotId}-p${i}" class="drawer-pane bio-pane">
+                <div class="section-title">Biography</div>
+                <p class="bio-text">${p.bio}</p>
+            </div>
+        </div>
+    `).join('');
+
+    sessionDiv.innerHTML = `
+        <span class="time">${slot.display}</span>
+
+        <h2 class="static-title"
+            style="color: var(--columbia-primary); font-size: 1.15rem; font-weight: 700;">
+            ${slot.title}
+        </h2>
+
+        ${panelHtml}
     `;
     } else if (slot.type === "closing") { 
         sessionDiv.className = 'session special-block'; 
