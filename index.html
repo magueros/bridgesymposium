@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bridge to the Ph.D. Program in STEM Symposium</title>
+    <style>
+        :root {
+            /* Official Columbia University Branding Palette */
+            --columbia-blue: #6cace4;
+            --columbia-primary: #1d3354; /* Deep Navy Blue */
+            --columbia-secondary: #002d62;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --bg-site: #f4f8fb;
+            --bg-card: #ffffff;
+            --border: #d0dfeb;
+            /* Soft Shaded Tones for Accordion Drawers */
+            --abstract-bg: #f0fdf4;
+            --abstract-border: #bbf7d0;
+            --bio-bg: #eff6ff;
+            --bio-border: #bfdbfe;
+            --break-bg: #f1f5f9;
+            --break-border: #cbd5e1;
+            --special-bg: #f9f5ff;
+            --special-border: #e9d5ff;
+            --live-glow: #ef4444;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.4;
+            margin: 0;
+            padding: 1rem 0.75rem 4rem 0.75rem;
+            background-color: var(--bg-site);
+            color: var(--text-main);
+            -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 0 0.5rem;
+        }
+        h1 {
+            font-size: 1.6rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--columbia-primary);
+            line-height: 1.2;
+            border-bottom: 2px solid var(--columbia-blue);
+            padding-bottom: 0.75rem;
+        }
+        .subtitle {
+            color: var(--columbia-secondary);
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .action-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .jump-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: var(--live-glow);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+            transition: transform 0.1s ease, background-color 0.2s;
+            width: 85%;
+            max-width: 280px;
+            text-decoration: none;
+        }
+        .jump-btn:active {
+            transform: scale(0.98);
+            background-color: #dc2626;
+        }
+        .jump-pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            animation: dot-pulse 1.5s infinite ease-in-out;
+        }
+        @keyframes dot-pulse {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+        .drawer-pane img {
+	    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+	}
+        .photo-tooltip {
+	    position: relative;
+	}
+	.photo-tooltip img {
+	    display: none;
+    	    position: absolute;
+            top: 1.5rem;
+	    left: 0;
+	    width: 120px;
+	    border-radius: 8px;
+	    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+	    z-index: 10;
+}
+	.photo-tooltip:hover img {
+	    display: block;
+	}
+        .print-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: var(--columbia-primary);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(29, 51, 84, 0.2);
+            transition: transform 0.1s ease, background-color 0.2s;
+            width: 85%;
+            max-width: 280px;
+        }
+        .print-btn:active {
+            transform: scale(0.98);
+            background-color: var(--columbia-secondary);
+        }
+        .print-btn svg {
+            width: 16px; height: 16px; fill: currentColor;
+        }
+        .schedule {
+            position: relative;
+            padding-left: 1.25rem;
+            border-left: 2px solid var(--columbia-blue);
+        }
+        .session {
+            position: relative;
+            background: var(--bg-card);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 2px solid var(--border);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            scroll-margin-top: 1.5rem;
+        }
+        .session::before {
+            content: '';
+            position: absolute;
+            left: calc(-1.25rem - 5px);
+            top: 1.35rem;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--columbia-primary);
+            border: 2px solid var(--bg-site);
+        }
+        .session.live-now {
+            border-color: var(--live-glow);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+            animation: pulse-border 2s infinite ease-in-out;
+        }
+        .session.live-now::before {
+            background: var(--live-glow);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3);
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0px rgba(239, 68, 68, 0.3); }
+            70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(239, 68, 68, 0); }
+        }
+        .live-tag {
+            display: none;
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: var(--live-glow);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .session.live-now .live-tag {
+            display: block;
+        }
+        .session.break-block {
+            background: var(--break-bg);
+            border-style: dashed;
+            border-color: var(--break-border);
+        }
+        .session.break-block::before {
+            background: #64748b;
+        }
+        .session.special-block {
+            background: var(--special-bg);
+            border-color: var(--special-border);
+        }
+        .session.special-block::before {
+            background: #8b5cf6;
+        }
+        .time {
+            display: inline-block;
+            font-weight: 700;
+            color: var(--columbia-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            background: #eef5fc;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+        }
+        .session.live-now .time { background: #fee2e2; color: var(--live-glow); }
+        .session.break-block .time { color: #475569; background: #e2e8f0; }
+        .session.special-block .time { color: #6d28d9; background: #f3e8ff; }
+        
+        .title-btn, .presenter-btn {
+            background: none; border: none; padding: 0.5rem 0;
+            text-align: left; font-family: inherit; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; width: 100%;
+        }
+        .title-btn:focus-visible,
+	.presenter-btn:focus-visible,
+	.jump-btn:focus-visible,
+	.print-btn:focus-visible,
+	#backToTopBtn:focus-visible {
+	outline: 3px solid var(--columbia-blue);
+	outline-offset: 3px;
+	}
+        .title { font-size: 1.1rem; font-weight: 600; margin: 0; color: var(--columbia-primary); padding-right: 2.5rem; }
+        .static-title { font-size: 1.15rem; font-weight: 700; margin: 0; color: var(--columbia-primary); padding-right: 2.5rem; }
+        .static-desc { margin: 0.25rem 0 0 0; color: var(--text-muted); font-size: 0.95rem; }
+        .presenter { font-size: 0.95rem; color: var(--text-muted); margin: 0; padding-right: 1rem; }
+        .presenter-name { color: #2b6cb0; font-weight: 500; }
+        .presenter-link { color: inherit; text-decoration: underline; }
+        .session.special-block .presenter-name { color: #7c3aed; }
+        
+        .indicator {
+            font-size: 1.2rem; font-weight: bold; color: var(--text-muted);
+            width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+	.drawer-pane {
+	height: 0;
+	overflow: hidden;
+
+    padding: 0 0.75rem;
+
+    opacity: 0;
+
+    transition:
+        height 320ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 180ms ease;
+
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.drawer-pane.open {
+    opacity: 1;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.abstract-pane.open {
+    background-color: var(--abstract-bg);
+    border-color: var(--abstract-border);
+}
+
+.bio-pane.open {
+    background-color: var(--bio-bg);
+    border-color: var(--bio-border);
+}
+     
+        .section-title { font-weight: 700; color: var(--columbia-primary); margin-bottom: 0.25rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .abstract-text, .bio-text { margin: 0; }
+        .bio-text { font-style: italic; }
+        
+        #backToTopBtn {
+            position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 99;
+            border: none; outline: none; background-color: var(--columbia-primary); color: white;
+            cursor: pointer; padding: 0.75rem; border-radius: 50%;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+        }
+        #backToTopBtn.show { opacity: 1; visibility: visible; }
+        #backToTopBtn svg { width: 20px; height: 20px; fill: currentColor; }
+
+        @media print { 
+            body { background: white !important; color: black !important; padding: 0 !important; } 
+            .container { max-width: 100% !important; width: 100% !important; } 
+            header h1 { border-bottom: 2px solid black !important; color: black !important; font-size: 2rem !important; } 
+            .subtitle { color: black !important; } 
+            .action-panel, #backToTopBtn, .indicator, .live-tag { display: none !important; } 
+            .schedule { border-left: 2px solid #ccc !important; padding-left: 1.5rem !important; } 
+            .session { page-break-inside: avoid; border: 1px solid #aaa !important; background: white !important; box-shadow: none !important; margin-bottom: 1.5rem !important; padding: 1.2rem !important; border-radius: 4px !important; } 
+            .session::before { border: 2px solid white !important; background: black !important; left: calc(-1.5rem - 5px) !important; } 
+            .time { background: none !important; color: black !important; font-size: 1rem !important; padding: 0 !important; font-weight: bold !important; } 
+            .title, .static-title { font-size: 1.3rem !important; color: black !important; margin-top: 0.25rem !important; } 
+            .presenter-name { color: black !important; font-weight: bold !important; } 
+            .drawer-pane { max-height: max-content !important; opacity: 1 !important; display: block !important; padding: 0.5rem 0 0 0 !important; margin-top: 0.5rem !important; background: none !important; border: none !important; border-top: 1px dashed #ccc !important; } 
+            .section-title { margin-top: 0.5rem !important; color: black !important; } 
+        } 
+    </style> 
+</head> 
+<body> 
+<div class="container"> 
+    <header> 
+        <h1>Bridge to the Ph.D. Program in STEM Symposium</h1> 
+        <p class="subtitle">May 26, 2026, Columbia University</p> 
+        <div class="action-panel"> 
+            <button class="jump-btn" onclick="jumpToCurrentSession()"> 
+                <span class="jump-pulse-dot"></span> Jump to Current Session 
+            </button> 
+            <button class="print-btn" onclick="triggerPrintFriendlyPdf()"> 
+                <svg viewBox="0 0 24 24"> 
+                    <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/> 
+                </svg> Save PDF / Print Layout 
+            </button> 
+        </div> 
+    </header> 
+    <main class="schedule" id="schedule-container"></main> 
+</div> 
+
+<button id="backToTopBtn" onclick="scrollToTop()" aria-label="Back to top"> 
+    <svg viewBox="0 0 24 24"> 
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/> 
+    </svg> 
+</button>
+
+<script>
+// Schedule data with detailed session info (1:00 PM - 3:00 PM)
+const rawSlots = [ 
+    { start: "09:00", end: "09:15", display: "09:00 AM - 09:15 AM", type: "opening", title: "Opening Remarks" }, 
+    { 
+        start: "09:15", 
+        end: "09:30", 
+        display: "09:15 AM - 09:30 AM", 
+        type: "talk", 
+        title: "One Size Does Not Fit All: Developing Bespoke, and Just, Building Decarbonization Plans", 
+        speaker: "Donya Moghaddari", 
+        bio: "Donya Moghaddari is originally from the metro Atlanta area. In 2024, she graduated from Georgia State University with honors in Biological Sciences, with a concentration in quality assurance for the life sciences industry. She has experience in laboratory research, having worked on cell death pathways in molecular parasitology and co-authoring a study on starvation stress in C. fasciculata. Donya is currently working in Bianca Howard’s Building Energy Research Lab in the Department of Mechanical Engineering, where her research focuses on how diverse social and building characteristics, along with time series dynamics of human activities, energy consumption, and environmental conditions, influence building and community decarbonization plans. By integrating qualitative and quantitative data with data science and energy modeling, her lab plans to develop justice-centered decarbonization strategies. Her research interests span engineering, environmental sustainability, and biomedical applications. Donya hopes to pursue a Ph.D. in mechanical/industrial or biomedical engineering to work on optimization, simulation, and renewable technologies. Donya hopes to work in designing and optimizing energy systems for sustainable infrastructure and/or advancing biomedical technologies that address equitable healthcare and community needs.", 
+        abstract: "Urban decarbonization efforts often prioritize technological upgrades, yet fail to account for how human behavior and building characteristics shape energy use across communities, particularly in underserved and historically marginalized areas. This study explores the relationships between residential energy consumption, occupant practices, and social-demographic factors to support more equitable climate action planning in New York City. We surveyed residents across upper Manhattan to collect information about their household characteristics, energy habits, and lived experiences, and identify patterns within income range, race, building types, and energy use. We analyze how these responses differ from the baseline assumptions used in previous building energy models. We identify trends in appliance usage, heating and cooling practices, and environmental exposure. Our current data indicate that approximately 75% of respondents report drafts or moisture issues in their homes, 45% have no thermostat, and about 50% have cut food or medicine spending to pay energy bills in the past year. Our findings differ from typical baseline modeling assumptions and previous approaches, which assume a more efficient envelope and better control of heating systems, and do not account for the trade-off between energy costs and other basic needs. These outcomes suggest that one-size-fits-all climate solutions overlook critical local needs. Our data highlight the importance of designing community-responsive programs that align with both structural and social realities and can contribute to decarbonization pathways that are not only effective, but also just. " 
+    }, 
+        { 
+        start: "09:30", 
+        end: "09:45", 
+        display: "09:30 AM - 09:45 AM", 
+        type: "talk", 
+        title: "Cyanobacterial Blooms in an Arctic Estuary: Temperature Effects on Growth and Photophysiology of Primary Producers near Kotzebue Sound, Alaska", 
+        speaker: "Denia (Deni) Lopez ", 
+        bio: "Denia (Deni) Lopez was born and raised in coastal South Carolina. She earned her B.S. in Biology, with a concentration in Coastal Ecology and Conservation, from the University of South Carolina Beaufort in 2023. Her work spans microbial oceanography, invertebrate resilience, shellfish aquaculture, and coastal ecosystem dynamics. In 2022, Deni participated in a Research Experience for Undergraduates (REU) at Mote Marine Laboratory, where she studied the ecological impacts of Karenia Brevis, a dinoflagellate responsible for harmful algal blooms and associated airborne toxins. She later completed an internship with the National Oceanic and Atmospheric Administration’s South Carolina Sea Grant Consortium, gaining hands-on experience in sustainable aquaculture practices. Following graduation, Deni joined the Aquaculture Genetics and Breeding Technology Center at the Virginia Institute of Marine Science, where she worked on developmental biology, genetics, and aquaculture husbandry under the mentorship of Jessica Small. She is currently a member of Andrew Juhl’s Aquatic Ecology lab at Lamont-Doherty Earth Observatory, where she studies how environmental conditions influence Arctic microbial physiology and contribute to cyanobacterial blooms near Kotzebue Sound, Alaska. Deni looks forward to pursuing a Ph.D. and continuing her research in aquaculture and fisheries science. She ultimately aims to lead a research lab that bridges science, policy, and the needs of coastal communities and the seafood industry.", 
+        abstract: "The Arctic is undergoing rapid environmental change driven by warming temperatures that cause cascading effects such as permafrost thaw, increased levels of colored dissolved organic matter and altered light conditions. These physical and chemical shifts have the potential to restructure microbial communities and their associated food webs. In coastal regions such as Kotzebue, Alaska where communities rely on marine resources for nutritional, cultural, and economic well-being, understanding how these changes influence microbial communities is critical. Since 2008, cyanobacterial blooms have been observed in waters surrounding Kotzebue with increased frequency, raising concerns due to their potential toxicity and impacts on subsistence resources. In temperate regions, bloom formation is often linked to rising temperatures; however, the direct effects of temperature on growth, and how this affects overall community composition in Arctic microbial systems, remain poorly understood. This study investigates the effect of temperature on growth and photophysiology of newly isolated cyanobacteria and co-occurring phytoplankton from surface waters near Kotzebue. To simulate environmentally relevant conditions, laboratory experiments are conducted across a temperature range of 2 to 32 ˚C under controlled light conditions (30 μmol photons m⁻² s⁻¹; 16:8 h light:dark cycle). For comparison, parallel experiments are performed with temperate and tropical cyanobacterial isolates. Preliminary results indicate distinct temperature sensitivities and highlight ecological tolerances among high-latitude isolates. Ultimately, these results will improve our understanding of the environmental factors driving cyanobacterial bloom initiation in the arctic, and our ability to predict their timing and scale. This will provide valuable insights into ecosystem shifts and support the local Arctic communities that rely on these environments. " 
+    }, 
+        { 
+        start: "09:45", 
+        end: "10:00", 
+        display: "09:45 AM - 10:00 AM", 
+        type: "talk", 
+        title: "Building a Climate Reanalysis-Based Evapotranspiration Database to Investigate Decadal Soil Moisture Variability", 
+        speaker: "Michelle Krakora", 
+        bio: "Michelle Krakora grew up in Southern California and graduated from the University of California, Los Angeles (UCLA) in 2022 with a B.S. in Environmental Science and Conservation Biology. As an undergraduate, Michelle worked on research projects in hydrology, marine biology, and conservation biology at UCLA, Brookhaven National Laboratory, and Lawrence Berkeley National Laboratory (LBNL). While at LBNL, Michelle did research with Michelle Newcomer on two projects to mitigate drinking water pollution. The tangible need for this research inspired Michelle to pursue environmental engineering. Before starting as a Bridge to PhD Scholar, Michelle worked on Department of Defense cleanup sites, dealing with hazardous waste and water-quality issues. Now, as an Environmental Engineering Bridge Scholar in Pierre Gentine’s lab, Michelle is reconstructing a long-term data library to understand decadal variability of soil moisture in different regions to better understand impacts of climate change and advise on water resource management. Michelle hopes to pursue a Ph.D. in Environmental Engineering and to continue conducting research on climate change, resource protection, and environmental degradation.", 
+        abstract: "In the face of climate change, it is difficult to definitively state which ecoregions of the Earth are becoming drier or wetter, or what the trend of soil moisture is overall. Manual soil moisture measurements are known to have high costs and inaccuracies. Manual soil moisture measurements are often expensive and inaccurate, while other indirect methods can only ascertain soil moisture under precise conditions and on a small scale. If assuming steady state when assessing the atmospheric profile of air, evapotranspiration (ET) can be calculated knowing the amount of moisture converging into an atmospheric column minus precipitation. Global moisture and precipitation data are available from 1979 onward from Compernicus’ European Centre for Medium-Range Weather Forecasts weather reanalysis product (ERA5) for mass-consistent atmospheric energy and moisture budget monthly data and GloH2O's multi-source weighted-ensemble precipitation data. ERA5 is a global weather and climate reanalysis product that combines historical observations with numerical weather models to provide a consistent, hourly reconstruction of Earth’s atmosphere, land, and ocean conditions. ET was calculated from available spatio-temporal data of ERA5 convergence and precipitation with the help of Columbia University’s Ginsburg High Performance Computing Server. The solved ET was then analyzed by time period and ecoregion. This analysis reveals historical and spatial patterns with ET decreasing annually and seasonally, showing less water in soil is available for evapotranspiration. Mapped linear regression of evapotranspiration shows dry, arid regions having increased evapotranspiration and moist, wet areas having decreasing evapotranspiration showing trends that drier climates get drier and wetter climates get wetter. This new historical ET database will enable predictions to be made about soil moisture levels and to model the future global impact of agricultural drought and its effects." 
+    }, 
+        { 
+         start: "10:00", 
+        end: "10:15", 
+        display: "10:00 AM - 10:15 AM", 
+        type: "talk", 
+        title: "Palynological History of Perch Lake in the Western Catskill Mountains, Andes, New York", 
+        speaker: "Amy Menegay", 
+        bio: "Amy Menegay was raised in Blacksburg, Virginia, and earned a B.S in Biology from William & Mary in 2024. During her time at William & Mary, she conducted research at the Virginia Institute of Marine Science under Juliette Smith. There, she studied harmful algal blooms, with a specific focus on Dinophysis spp, a dinoflagellate whose toxins can cause diarrhetic shellfish poisoning in humans. After graduating from William & Mary, Amy was hired to work for the Smith Lab full-time, developing a novel research project testing the effects of diatom byproducts on oyster larvae. These byproducts have caused increased mortality in many oyster hatcheries, leading to much confusion and unprofitable years. Following that summer, Amy started as a Bridge Scholar at Lamont-Doherty Earth Observatory, where she works with Dorothy Peteet studying paleoecology. Amy analyzes pollen from a lake sediment core collected in the Catskills to understand climate and vegetational change over time. This fall, Amy will continue to do paleoclimate research as a Ph.D. student at the University of Texas Austin. There, she will build on her paleoecology background and use organic geochemical proxies from plants deposited in lake sediments to understand climate change over time. She hopes to collaborate with archaeologists and anthropologists to pair climate research with that of human civilization, to better understand human-climate interactions.", 
+        abstract: "The Catskill Mountains are a critical source of water for New York City, making this area important to inform our understanding of how future climate changes will impact water accessibility. This study presents the palynological (pollen) history of Perch Lake, located in the Western Catskills. Fossil pollen is a useful proxy for past temperature and hydrology of the region. We sampled a 4.7-meter sediment core for macrofossils and pollen to understand the paleoecological changes of the area from the late glacial period (~14,000 years before present) until the present day. The sediments were radiocarbon dated using terrestrial macrofossils (n=16) for chronological control. Pollen accumulation begins during the late glacial period (13,670 years ago), when the region first has tundra, then is dominated by pine (Pinus), spruce (Picea), and sedge (Cyperaceae), indicating cold boreal forest. By 10,500 years ago, the forest was dominated by oak (Quercus), pine, and hemlock (Tsuga), characterizing the early Holocene epoch, and indicating a shift to warmer and wetter conditions. Approximately 9,000 years ago, beech (Fagus) replaced pine and characterized the mid-Holocene moisture increase along with hemlock, oak, and birch (Betula). Around 5,000 years ago there was an abrupt decrease in hemlock, which was replaced with minor increases in beech, pine, and oak. By 3,644 years ago, hemlock partially recovers and beech, birch, pine, and oak continue to dominate. The last 200 years are characterized by declines in forest species and an increase in ragweed (Ambrosia), a species that colonizes disturbed landscapes. Future work will apply transfer functions to the data to quantify temperature and precipitation changes over time." 
+    }, 
+    { start: "10:15", end: "10:45", display: "10:15 AM - 10:45 AM", type: "break", title: "Coffee Break", desc: "" }, 
+        { 
+        start: "10:45", 
+        end: "11:00", 
+        display: "10:45 AM - 11:00 AM", 
+        type: "talk", 
+        title: "Race, Rent, and Homelessness: Describing and Explaining Variation in Racial Disparities in Homelessness in the United States", 
+        speaker: "Theo Burden", 
+        bio: "Theo Burden is a second-year predoctoral research assistant in the Department of Economics at Columbia University from Philadelphia, Pennsylvania. Theo graduated in 2024 from Spelman College in Atlanta, Georgia with a B.A. in Economics. Theo discovered she wanted to get her PhD and specialize in health economics during her summer internship in 2023 at University of Michigan when she conducted research on how adverse childhood experiences contribute to barriers for students in Detroit Public Schools to accessing mental health services. After graduating Theo participated in the American Economic Association Summer Program where worked with the Federal Deposit Insurance Corporation under the mentorship of Luke Watson of the Center of Financial Research, conducting research on how the air quality in New York City affects the number of bank branch closures in the area. Throughout her time as a Bridge Scholar, Theo has been working with Brendan O’Flaherty on topics in urban economics including homelessness and proxy discrimination. Upon completion of the Bridge Program Theo will begin her Double Master’s in Public Administration at the London School of Economics (LSE) and Columbia University in hopes of pursuing a career in making healthcare more accessible to underserved and underrepresented populations.", 
+        abstract: "Homelessness in the United States reached a record high in 2024, with over 771,000 individuals unhoused, a rise of 18% from 2023. This study investigates why Black poor people are disproportionately more likely to be homeless: Black Americans make up only 12% of the U.S. whole population, but more than 32% of the homeless population. Our data come from counts of homeless people from every year, referred to as point-in-time data, from the U.S. Department of Housing and Urban Development. The data span the years 2014–2022; we examine racial differences in homelessness rates between Black, White, and Hispanic individuals. We explore the number of homeless people compared to the number of people in poverty by race, as well as average local rent prices and how many apartments were available to rent. We used casual trees to see where and when racial differences in homelessness are the biggest, multivariate regressions to show how race, rent, and apartment availability relate to homelessness, and generalized random forests to display how the effect of race varies across cities and conditions. We conclude that racial disparities are greater in areas with higher rents, and that tighter rental markets lead to more selective landlord practices that disproportionately affect Black renters." 
+    }, 
+        { 
+        start: "11:00", 
+        end: "11:15", 
+        display: "11:00 AM - 11:15 AM", 
+        type: "talk", 
+        title: "Ultrasound-Responsive Perfluorocarbon Nanoparticles for Selective Drug Release to Accelerate Wound Healing", 
+        speaker: "Aisha Mansoor", 
+        bio: "Aisha Mansoor, a Pakistani-American born and raised in Queens, New York, is a second-year Bridge to the Ph.D. Scholar in the Department of Biomedical Engineering. She received her B.A. in Chemistry, with a focus in Chemical Biology, from Rutgers University in 2024. During her undergraduate studies, Aisha conducted research on cancer detection utilizing CRISPR nucleic-acid biosensing in Ki-Bum Lee's lab. She also participated in a REU program, where she led research on ionizable lipid nanoparticles for mRNA delivery across the blood-brain barrier under the mentorship of Michael Mitchell. These experiences sparked her passion for developing nanoparticle-based drug delivery systems. Currently, Aisha is working with Sam Sia, developing a platform to target wound healing through ultrasound-responsive nanoparticles for on-demand drug release. She is motivated by the potential to advance drug delivery and hopes her research will contribute to therapeutic interventions tailored to individual patient needs. As an NSF GRFP awardee, she aims to continue research in this rewarding field and pursue a Ph.D. in Biomedical Engineering.", 
+        abstract: "Chronic wounds pose a significant burden on patients and healthcare systems. They are characterized by persistent inflammation, prolonged infection, and failure to progress through the normal stages of healing. Existing treatments often lack precision, offering limited control over when and where therapeutics are delivered. To address this, we developed a platform of ultrasound-responsive nanoparticles engineered for selective drug release. These nanoparticles feature a PFC (perfluorocarbon) core that undergoes vaporization in response to focused ultrasound and a PLGA (poly(lactic-co-glycolic acid)) shell that enhances stability and biocompatibility. These nanoparticles remain stable until activated by focused ultrasound, at which point localized drug release is achieved without disturbing neighboring regions. By tuning the composition of the PLGA and PFC in these nanoparticles, we leverage distinct acoustic vaporization thresholds to enable sequential, on-demand release of different payloads. This system offers the potential to synchronize therapeutic delivery with the specific phases of wound healing, thereby accelerating tissue repair and reducing complications associated with chronic wounds. This approach represents a significant advancement in smart drug delivery, providing long-term stability, precise control over release timing, and the ability to tailor therapy to the evolving needs of complex wound environments. Ultimately, these nanoparticles could enable a new class of adaptive wound treatments that respond to the biology of healing in real time." 
+    }, 
+        { 
+        start: "11:15", 
+        end: "11:30", 
+        display: "11:15 AM - 11:30 AM", 
+        type: "talk", 
+        title: "Modeling Philippine Tropical Cyclone Risk in Present and Future Climates", 
+        speaker: "Aidan Ocampo", 
+        bio: "Aidan Ocampo grew up in Orange County, CA, before graduating from Northwestern University with a B.A. in Earth and Planetary Sciences in 2024. His research at Northwestern aimed to improve simulations of debris flows occurring in Big Sur, CA, in the aftermath of the 2020 Dolan Fire. This research utilized a coupled hydrometeorological and sediment transport model. Inspired by his Filipino heritage, his current research focuses on modeling Philippine tropical cyclone risk using synthetic tropical cyclone model data and a socioeconomic modeling framework. In particular, Aidan’s research, advised by Suzana Camargo and Adam Sobel, seeks to simulate long-term projections of Philippine tropical cyclone behavior in a warming climate. This fall, Aidan will continue his research on tropical cyclone hazards as a Ph.D. student at Princeton University in the Department of Civil and Environmental Engineering. Beyond graduate school, he aspires to become a faculty member generating research not only with great scientific merit, but also meaningful implications for the broader community.", 
+        abstract: "Historical records indicate that the Philippines is among the most vulnerable countries to tropical cyclones, having endured some of the most destructive storms ever recorded. Prior work has applied a tropical cyclone hazard model, the Columbia HAZard model (CHAZ), to the Philippines using historical environmental conditions and a socioeconomic framework to assess historic tropical cyclone risk. CHAZ models the entire lifetime of a tropical cyclone, including genesis, storm track, and intensity. To model the social impact of tropical cyclones, we utilize the LitPop dataset, which derives exposed asset value from population distribution and satellite products of night-lights data. We estimate vulnerability using 17 vulnerability curves calibrated for each region of the Philippines. We extend this work by improving the length and quality of historic simulations. Furthermore, to consider how climate change impacts the characteristics of tropical cyclones, we use environmental conditions from selected global climate models and future scenarios. Historical simulations closely align with patterns in the observed record. Future simulations show minimal changes for tropical cyclone intensity and return period compared to the historical in the three future scenarios considered for global climate models. Projected asset losses remain mostly unchanged pointing to necessary improvements in exposure and vulnerability in future work. This study provides a useful, first-order assessment of future tropical cyclone risk in the Philippines." 
+    }, 
+    { 
+        start: "11:30", 
+        end: "12:00", 
+        display: "11:30 AM - 12:00 PM", 
+        type: "special", 
+        title: "Keynote Presentation: Bridge Building for the Future in a Time of Institutional Retreat", 
+        speaker: "Professor Keivan Stassun, Vanderbilt University", 
+        bioLink: "https://macfound.org",
+        bio: "Dr. Keivan Stassun is a Professor of Physics and Astronomy at Vanderbilt University with a distinguished career in stellar astrophysics, NASA mission science, and academic leadership, notably as founding director of the Fisk-Vanderbilt Bridge Program. A Fellow of the American Association for the Advancement of Science (AAAS), American Astronomical Society, and American Physical Society, he has mentored over 30 PhDs, founded the Center for Autism & Innovation, and received numerous honors, including the AAAS Mentor of the Year and the Presidential Award for Excellence in Science and Engineering Mentoring."
+    }, 
+    { start: "12:00", end: "13:00", display: "12:00 PM - 01:00 PM", type: "break", title: "Lunch & Poster Session", desc: "Carleton Commons, Mudd Hall" }, 
+    { 
+        start: "13:00", 
+        end: "13:15", 
+        display: "01:00 PM - 01:15 PM", 
+        type: "talk", 
+        title: "Reconceptualizing Multiple Goal Pursuit: A Culturally Relevant Framework for American Indian/Alaskan Native College Students", 
+        speaker: "Anisha Marion, Cohort 13", 
+        bio: "Anisha Marion is a proud member of the Ojibway and Abenaki Nations, whose land includes present-day Ontario and Quebec provinces. She received her Bachelor of Arts in psychology from the State University of New York at Plattsburgh. Through several undergraduate research experiences, she developed a passion for understanding how historical trauma impacts minority communities, specifically focusing on American Indian communities, both at the individual and community level. By integrating research and clinical practice, she hopes to apply more culturally sensitive therapies to minority communities. Anisha has worked in a residential facility where she taught self-regulation and emotional regulation skills to teenage girls with mental health disorders. The primary focus of her work focused on helping them understand their emotions and how to implement healthy coping strategies. As a Bridge Scholar, Anisha is working with Kevin Ochsner in the Social Cognitive and Affective Neuroscience Laboratory in the Department of Psychology. Her research focuses on understanding the psychological and neural bases of emotional experiences in regards to perception and emotional regulation. After completing the Bridge to the Ph.D. Program, Anisha plans to pursue a Ph.D. in clinical health psychology. She is excited about this new opportunity to gain mentors and knowledge that will help shape her professional career.", 
+        bioLink: "https://adaptlab.psych.utah.edu/people.php",
+        abstract: "American Indian/Alaskan Native (AI/AN) college students pursue higher education with goals centered on improving the lives of their tribal communities. However, AI/AN students have the lowest degree completion rates and report the highest rates of physical and mental health concerns. Current work on goal pursuit offers a lens for understanding how students pursue goals. However, these frameworks are often rooted in Westernized ideals centered on individual achievement, which conflict with AI/AN students' communally oriented goals. Recent work within goal pursuit has begun to understand three-goal dynamics; these theories fail to appropriately capture the cultural values that drive AI/AN college students’ goals. Therefore, utilizing a culturally informed approach to goal setting and well-being may be imperative to support AI/AN students as they navigate academics alongside other life responsibilities. Through this theoretical review, I incorporate theories from developmental, social, and cultural literatures to address three primary aims. First, I introduce emerging adulthood and discuss the unique experiences of AI/AN college students. Second, I integrate literature on individualistic orientation of multiple goal pursuit to highlight the need for goal-setting frameworks that reflect cultural values among AI/AN students. Finally, I propose the Medicine Wheel as a model for multiple goal pursuit and discuss implications." 
+    }, 
+    { 
+        start: "13:15", 
+        end: "13:30", 
+        display: "01:15 PM - 01:30 PM", 
+        type: "talk", 
+        title: "Galaxies Are Places", 
+        speaker: "Dr. Julia Blue Bird, Cohort 6", 
+        bio: "Julia Blue Bird is from South Dakota's Pine Ridge Reservation and is an enrolled member of the Oglala Sioux Tribe. She has a B.S. in electrical engineering from the South Dakota School of Mines and Technology and a M.S. in electrical engineering from the University of South Florida. Before coming to Columbia, Julia was a radio frequency engineer at NASA Johnson Space Center. While at NASA, she worked on the design of the S-band communication system on the Orion Crew Exploration Vehicle and the design of an ultra-wideband communication and tracking system developed for use by astronauts and vehicles on the Moon. Currently, Julia is a RA in the Department of Astronomy working with Jacqueline van Gorkom on a far-reaching radio survey of neutral hydrogen gas around galaxies. This survey is being conducted using the Very Large Array radio observatory, located in New Mexico, and will help provide insight into galaxy formation and evolution. Ultimately, Julia hopes to build on her experience working with radio frequency systems and become a radio astronomer studying the large-scale structure of the universe.", 
+        bioLink: "https://astrobites.org/2023/06/06/meet-the-aas-keynote-speakers-julia-blue-bird/", 
+        abstract: "We share images from an astronomical survey of galactic morphology and kinematics, spanning 5 billion years of cosmic time. We feature record-breaking detections of hydrogen gas in galaxies, from scholars arising out of Cohort 1 and Cohort 6. These images are more than just distant pixels; these galaxies are vibrant, tangible places. We remind you all, take time, look up (at the night sky), and connect with nature." 
+    }, 
+    { 
+        start: "13:30", 
+        end: "13:45", 
+        display: "01:30 PM - 01:45 PM", 
+        type: "talk", 
+        title: "Mail-Ordered Mobility? Intergenerational Impacts of Homeownership", 
+        speaker: "Zohal Barsi, Cohort 13", 
+        bio: "Zohal Barsi was born in Al Ain, the United Arab Emirates to Sudanese parents and immigrated to San Antonio, Texas at the age of four. She graduated from Wellesley College in May of 2019 with a Bachelor of Arts in economics and English. As a component of her undergraduate program, she completed a year of study at the London School of Economics and Political Science. Following graduation, she participated in the American Economic Association Summer Training and Scholarship Program at Michigan State. In addition to taking courses in microeconomics, mathematics and econometrics, Zohal researched the impacts that leisure-enhancing technologies, such as cellphone applications, have on time allocation by country. From September 2019 to June 2020, Zohal served as a Mariam K. Chamberlain Fellow at the Institute for Women’s Policy Research in Washington D.C. There, she worked on employment and earnings projects and researched the rise of entrepreneurship among women of color. As a Bridge Scholar, she is researching topics in urban economics with Donald Davis in the Department of Economics. After completing the Bridge to the Ph.D. Program, Zohal plans to pursue a Ph.D. in economics.", 
+        bioLink: "https://econ.wisc.edu/staff/barsi-zohal/",
+        abstract: "We discuss how an exogenous expansion in access to homeownership shaped the geography of economic opportunity in the United States in the 20th century. We examine the rise of mail-order kit housing between 1910 and 1930, an innovation that lowered construction costs, standardized designs, and tied housing to railroads. Using newly digitized data on kit-housing firms’ mill locations and full-count census records, we exploit spatial variation in transportation costs as a source of exogenous variation in town-level homeownership access. We estimate the contemporaneous effects of increased homeownership on residential tenure, educational attainment, and housing values, and examine long-run impacts on intergenerational educational and occupational mobility. To complement the town-level analysis, we link novel person-level purchase records from a leading kit-housing firm to census data to study the characteristics of adopters and validate our identification strategy." 
+    }, 
+    { 
+        start: "13:45", 
+        end: "14:00", 
+        display: "01:45 PM - 02:00 PM", 
+        type: "talk", 
+        title: "Searching for Effective and Equitable Policy Solutions for the Overdose Crisis", 
+        speaker: "Professor John Pamplin II, Cohort 3", 
+        bio: "John is originally from Yellow Springs, Ohio. He attended Morehouse College, in Atlanta, Georgia, where he received his B.S. in biology in 2010. As a member of the John H. Hopps Jr. Research Scholars Program, which is funded by the Department of Defense, John worked with Daniel Hummer at Morehouse, investigating the role of gamma-aminobutyric acid (GABA) in light-induced phase shifts in hamsters. Additionally, John spent the summer of 2009 in the laboratory of Ted Garland Jr. at the University of California, Riverside, studying sexual dimorphism in the pelvises of a group of mice selectively bred for voluntary wheel running. As a Bridge scholar, John studied circadian rhythms. His work focused on the role of the suprachiasmatic nucleus (SCN) in the regulation of sex hormones. Specifically, he was looking for sex differences in the circadian regulation of the endocrine pathway responsible for sex hormone release in hamsters.", 
+        bioLink: "https://www.publichealth.columbia.edu/profile/john-pamplin-ii-phd", 
+        abstract: "The ongoing overdose crisis has been a pressing public health issue for over two decades. Though the early phases of the overdose crisis were characterized as predominately impacting white people, since 2016, the greatest increases in fatal overdose rates have been experienced by Black people, primarily due to the increased prominence of synthetic opioids. Drug harm reduction laws, such as overdose Good Samaritan laws and naloxone access laws, are a class of state-level policy interventions that may be able to reduce overdose mortality; however, a number of methodological challenges have hindered our ability to assess the effectiveness of these laws, and in particular, whether their impacts have been experienced equitably. This talk will discuss a novel approach to overcome some of the methodological challenges of traditional methods for evaluating the effects of drug harm reduction laws. To do so, we will highlight findings from an ongoing study that through this approach, aims to estimate the effects of enacted harm reduction law provisions to determine which set of provisions are best suited to equitably intervene against the overdose crisis." 
+    }, 
+{
+    start: "14:00",
+    end: "14:15",
+    display: "02:00 PM - 02:15 PM",
+    type: "memorial",
+    title: "In Memoriam",
+    speaker: "Remembering Rhondale (Ron) Tso (Cohort 6) and Shane Colombo (Cohort 9)",
+    photos: [
+        {
+            name: "Rhondale (Ron) Tso",
+            img: "ron.jpeg"
+        },
+        {
+            name: "Shane Colombo",
+            img: "shane.jpeg"
+        }
+    ]
+},
+    { start: "14:15", end: "14:45", display: "02:15 PM - 02:45 PM", type: "break", title: "Coffee Break", desc: "" }, 
+    { 
+        start: "14:45", 
+        end: "15:00", 
+        display: "02:45 PM - 03:00 PM", 
+        type: "talk", 
+        title: "Agony and Ecstasy: A Scientist’s Path from Incarceration to MDMA Research", 
+        speaker: "Dr. Christopher Medina-Kirchner, Cohort 8", 
+        bio: "Christopher Medina-Kirchner, a native of Milwaukee, Wisconsin, graduated from the University of Wisconsin-Milwaukee in 2014 with a B.A. in psychology. As an undergraduate, he was a McNair scholar and conducted research in Krista Lisdahl’s Brain Imaging and Neuropsychology (BraIN) Laboratory, as well as with the Milwaukee County Drug Treatment Court evaluation team. Through this work, Christopher began to notice how misinformation about the neuropsychopharmacological effects of drugs has contributed to high incarceration rates. This inspired him to gain a more thorough understanding of the neurobiological and environmental factors that determine responses to drug effects. At Columbia, Christopher worked with Carl Hart to understand factors that mediate drug self-administration behavior and with Geraldine Downey to develop a rejection-sensitivity model of coping with the stigma of a criminal record. He received a “Beyond the Bars” fellowship, which affords him an opportunity to participate in research projects aimed at increasing our understanding of mass incarceration and factors that will reverse this situation. Christopher aspires to become a neuropsychopharmacologist who investigates the effects of psychoactive substances in human research patients while taking into consideration environmental and social factors.", 
+        abstract: "After being incarcerated as a teenager for selling MDMA, Dr. Christopher Medina-Kirchner, Ph.D. set out to study the drug through scientific research. His academic path—from Columbia University to Harvard Medical School—has been driven by a commitment to advancing scientific understanding of MDMA’s effects. In this talk, he will present findings from his MDMA research, including controlled human administration studies, naturalistic research on ecstasy use and mood, and the potential role of genetics in shaping these effects. Importantly, he will discuss how lived experience can inform evidence-based approaches to drug education and policy." 
+    }, 
+    { 
+        start: "15:00", 
+        end: "15:15", 
+        display: "03:00 PM - 03:15 PM", 
+        type: "talk", 
+        title: "Bridging Hope and Science: My Path from a Dream to Pharma Leadership", 
+        speaker: "Dr. Elizabeth Rodriguez, Cohort 1", 
+        bio: "Elizabeth graduated from Hunter College (CUNY), with a B.A. in psychology. While at Hunter, she was a Minority Access to Research and Career (MARC) and then a Minority Biomedical Research Support (MBRS) scholar. For three years she worked in Cheryl Harding's neuro-endocrinology laboratory studying song-learning and sexual behaviors in zebra finches. While a MARC/MBRS scholar, Elizabeth also participated twice in the Summer Program for Under-Represented Students at Columbia University. In Prof. Silver's laboratory, Elizabeth assessed suprachiasmatic nucleus activation by a light-pulse when mice were aroused during their normal resting time. She also mapped the distribution of neuro-immune mast cells during brain development in baseline conditions.", 
+        abstract: "I arrived in New York from the Dominican Republic at 13, carrying hopes I could not yet name. One year later, before high school began, I became a mother. My daughter became my greatest source of strength and my reason to keep going. Around that time, my younger sister began showing signs of schizophrenia, while we lived in a one-bedroom apartment in public housing. In the face of uncertainty and responsibility far beyond my years, I made a promise: I would understand mental illness at its core, and I would build a different future for my daughter. That promise carried me through every obstacle. I became the first in my family to graduate high school, the first to earn a college degree, and, thanks to Columbia’s Bridge to Ph.D. Program, the first to obtain a Ph.D. in neuroscience. Each milestone represented more than achievement; it represented survival, perseverance, and the refusal to let circumstance define my life. Today, as a Senior Manager in regulatory affairs at a top pharmaceutical company, I carry that same purpose forward, helping advance medicines that can change and save lives." 
+    }, 
+    { start: "15:15", end: "16:00", display: "03:15 PM - 04:00 PM", type: "special", title: "Alumni Panel", speaker: "Chukwudi Onyemekwu (Cohort 1), Shaness Grenald (Cohort 2), Iris Ponce (Cohort 11), Talha Rehman (Cohort 12)" }, 
+    { start: "16:00", end: "16:30", display: "04:00 PM - 04:30 PM", type: "closing", title: "Closing Remarks", speakers: [ { name: "Professor Dima Amso", link: "https://psychology.columbia.edu/content/dima-amso" }, { name: "Professor Dennis Mitchell", link: "https://www.dental.columbia.edu/profile/dennis-mitchell-dds" }, { name: "Professor Marcel Agüeros", link: "https://www.astro.columbia.edu/content/marcel-agueros" } ] }     
+]; 
+
+// Render schedule and update UI functions
+const container = document.getElementById('schedule-container'); 
+let presentationCounter = 1; 
+
+rawSlots.forEach((slot) => { 
+    const sessionDiv = document.createElement('div'); 
+    sessionDiv.dataset.start = slot.start; 
+    sessionDiv.dataset.end = slot.end; 
+    
+    if (slot.type === "break") { 
+        sessionDiv.className = 'session special-block'; 
+        const descHtml = slot.desc ? `<p class="static-desc">${slot.desc}</p>` : ''; 
+        sessionDiv.innerHTML = ` 
+            <span class="time">${slot.display}</span> 
+            <h2 class="static-title" style="color: var(--columbia-primary); font-size: 1.1rem; font-weight: 600;">${slot.title}</h2> 
+            ${descHtml} 
+        `; 
+    } else if (slot.type === "opening") { 
+        sessionDiv.className = 'session special-block'; 
+        sessionDiv.innerHTML = ` 
+            <span class="time">${slot.display}</span> 
+            <h2 class="static-title" style="color: var(--columbia-primary); font-size: 1.1rem; font-weight: 600;">${slot.title}</h2> 
+            <p class="presenter" style="padding-top: 0.25rem;"><span class="presenter-name">  
+		<a href="https://www.chem.columbia.edu/content/ruben-l-gonzalez-jr" target="_blank" class="presenter-link">Professor Ruben Gonzalez Jr.</a> and <a href="https://www.astro.columbia.edu/content/marcel-agueros" target="_blank" class="presenter-link">Professor Marcel Agüeros</a> 
+            </span> </p> 
+        `; 
+    } else if (slot.type === "memorial") {
+    sessionDiv.className = 'session special-block';
+
+    const internalSlotId = presentationCounter++;
+
+    const photoHtml = (slot.photos || []).map((p, i) => `
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin-bottom:0.75rem;
+        ">
+            <img 
+                src="${p.img}" 
+                alt="${p.name}"
+                style="
+                    width:60px;
+                    height:60px;
+                    object-fit:cover;
+                    border-radius:8px;
+                    border:1px solid var(--border);
+                "
+            />
+            <div style="font-weight:600; color:var(--columbia-primary);">
+                ${p.name}
+            </div>
+        </div>
+    `).join('');
+
+    sessionDiv.innerHTML = `
+        <span class="time">${slot.display}</span>
+
+        <h2 class="static-title"
+            style="color: var(--columbia-primary); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem;">
+            ${slot.title}
+        </h2>
+
+        <p class="presenter" style="color: var(--text-muted); font-style: italic;">
+            ${slot.speaker}
+        </p>
+
+        <button class="presenter-btn"
+            onclick="toggleDrawer('${internalSlotId}', 'photos')"
+            aria-expanded="false"
+            aria-controls="photos-${internalSlotId}">
+            <p class="presenter">
+                <span class="presenter-name">View Photos</span>
+            </p>
+            <span class="indicator" id="ind-photos-${internalSlotId}">+</span>
+        </button>
+
+        <div id="photos-${internalSlotId}" class="drawer-pane bio-pane">
+            ${photoHtml}
+        </div>
+    `;
+    } else if (slot.type === "closing") { 
+        sessionDiv.className = 'session special-block'; 
+        const speakerLinks = slot.speakers.map(s => `<a href="${s.link}" target="_blank" class="presenter-link">${s.name}</a>`); 
+	const last = speakerLinks[speakerLinks.length - 1];
+	const rest = speakerLinks.slice(0, -1).join(', ');
+	const speakerHtml = speakerLinks.length > 1 ? `${rest}, and ${last}` : last;
+        sessionDiv.innerHTML = ` 
+            <span class="time">${slot.display}</span> 
+            <h2 class="static-title" style="color: var(--columbia-primary); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem;">${slot.title}</h2> 
+            <p class="presenter"><span class="presenter-name" style="color: #7c3aed;">${speakerHtml}</span></p> 
+        `; 
+    } else { 
+        const isSpecial = slot.type === "special"; 
+        sessionDiv.className = isSpecial ? 'session special-block' : 'session'; 
+        
+        let titleText = slot.title; 
+        let speakerHtml = slot.speaker; 
+        let internalSlotId = presentationCounter++; 
+        
+        if (!titleText) { 
+            titleText = `Presentation Title #${internalSlotId}`; 
+            speakerHtml = `Speaker Name #${internalSlotId}`; 
+        } 
+        if (slot.bioLink) { 
+            speakerHtml = `<a href="${slot.bioLink}" target="_blank" class="presenter-link">${slot.speaker}</a>`; 
+        } 
+        
+        const abstractTextContent = slot.abstract ? slot.abstract : `Detailed summary, core talking points, and session description text for this specific event slot segment.`; 
+        const bioTextContent = slot.bio ? slot.bio : `Professional background details, group composition, or organizational affiliations associated with this slot segment.`; 
+        
+        // Dynamic drawer section header determination logic 
+        const bioSectionHeader = (slot.start >= "09:15") ? "Bridge Biography" : "Biography"; 
+        
+        
+        sessionDiv.innerHTML = ` 
+            <span class="time">${slot.display}</span> 
+            <button class="title-btn" onclick="toggleDrawer('${internalSlotId}', 'abstract')" aria-expanded="false" aria-controls="abstract-${internalSlotId}"> 
+                <h2 class="title">${titleText}</h2> 
+                <span class="indicator" id="ind-abstract-${internalSlotId}">+</span> 
+            </button> 
+            <div id="abstract-${internalSlotId}" class="drawer-pane abstract-pane"> 
+                <div class="section-title">Abstract</div> 
+                <p class="abstract-text">${abstractTextContent}</p> 
+            </div>         
+            <button class="presenter-btn" onclick="toggleDrawer('${internalSlotId}', 'bio')" aria-expanded="false" aria-controls="bio-${internalSlotId}"> 
+                <p class="presenter"><span class="presenter-name">${speakerHtml}</span></p> 
+                <span class="indicator" id="ind-bio-${internalSlotId}">+</span> 
+            </button> 
+            <div id="bio-${internalSlotId}" class="drawer-pane bio-pane"> 
+                <div class="section-title">${bioSectionHeader}</div> 
+                <p class="bio-text">${bioTextContent}</p> 
+            </div> 
+        `; 
+    } 
+    container.appendChild(sessionDiv); 
+}); 
+
+// Time-based highlighting and interaction functions
+function getMilitaryTimeString(date) { 
+    return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`; 
+} 
+
+function toMinutes(hhmm) {
+    const [h, m] = hhmm.split(':').map(Number);
+    return h * 60 + m;
+}
+
+function addLiveTag(session) {
+    if (session.querySelector('.live-tag')) return;
+
+    const tag = document.createElement('span');
+    tag.className = 'live-tag';
+    tag.textContent = 'LIVE';
+
+    tag.setAttribute('aria-hidden', 'true'); // important
+
+    session.appendChild(tag);
+}
+
+function removeLiveTag(session) {
+    const tag = session.querySelector('.live-tag');
+    if (tag) tag.remove();
+}
+
+function updateLiveHighlighting() {
+    const now = new Date();
+    const current = now.getHours() * 60 + now.getMinutes();
+
+    const sessions = document.querySelectorAll('.session');
+
+    sessions.forEach(session => {
+        const start = toMinutes(session.dataset.start);
+        const end = toMinutes(session.dataset.end);
+
+        const isLive = current >= start && current < end;
+
+        if (isLive) {
+            session.classList.add('live-now');
+            addLiveTag(session);
+        } else {
+            session.classList.remove('live-now');
+            removeLiveTag(session);
+        }
+    });
+}
+
+updateLiveHighlighting();
+setInterval(updateLiveHighlighting, 30 * 1000);
+
+function jumpToCurrentSession() { 
+    const activeSession = document.querySelector('.session.live-now'); 
+    if (activeSession) { 
+        activeSession.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+    } else { 
+        alert("There is no live presentation running at this exact time."); 
+    } 
+} 
+
+function triggerPrintFriendlyPdf() { 
+    window.print(); 
+} 
+
+const topBtn = document.getElementById("backToTopBtn"); 
+window.onscroll = function() { 
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) { 
+        topBtn.classList.add("show"); 
+    } else { 
+        topBtn.classList.remove("show"); 
+    } 
+}; 
+
+function scrollToTop() { 
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+} 
+
+function animateOpen(drawer) {
+    drawer.classList.add('open');
+    drawer.style.height = '0px';
+
+    requestAnimationFrame(() => {
+        drawer.style.height = drawer.scrollHeight + 'px';
+    });
+
+    const onEnd = (e) => {
+        if (e.propertyName !== 'height') return;
+
+        drawer.style.height = 'auto';
+
+        drawer.removeEventListener('transitionend', onEnd);
+
+        // 👇 NEW: scroll into view AFTER opening finishes
+        scrollDrawerIntoView(drawer);
+    };
+
+    drawer.addEventListener('transitionend', onEnd);
+}
+
+function animateClose(drawer) {
+    // Freeze current computed height
+    drawer.style.height = drawer.scrollHeight + 'px';
+
+    requestAnimationFrame(() => {
+        drawer.style.height = '0px';
+    });
+
+    const onEnd = (e) => {
+        if (e.propertyName !== 'height') return;
+
+        drawer.classList.remove('open');
+        drawer.removeEventListener('transitionend', onEnd);
+    };
+
+    drawer.addEventListener('transitionend', onEnd);
+}
+
+function scrollDrawerIntoView(drawer) {
+    const session = drawer.closest('.session');
+    if (!session) return;
+
+    session.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+function updateIndicator(drawer, indicatorId) {
+    const indicator = document.getElementById(indicatorId);
+    if (!indicator) return;
+
+    const isOpen = drawer.classList.contains('open');
+    indicator.textContent = isOpen ? '−' : '+';
+}
+
+function toggleDrawer(slotNum, type) {
+    const targetId = `${type}-${slotNum}`;
+    const types = ['abstract', 'bio', 'photos'];
+    const altType = types.find(t => t !== type);
+    const altId = `${altType}-${slotNum}`;
+
+    const targetDrawer = document.getElementById(targetId);
+    const altDrawer = document.getElementById(altId);
+
+    const targetBtn = document.querySelector(`[aria-controls="${targetId}"]`);
+    const altBtn = document.querySelector(`[aria-controls="${altId}"]`);
+
+    function setExpanded(btn, expanded) {
+        btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    }
+
+    // Close alternate drawer if open
+    if (altDrawer && altDrawer.classList.contains('open')) {
+        animateClose(altDrawer);
+        setExpanded(altBtn, false);
+        updateIndicator(altDrawer, `ind-${altId}`);
+    }
+
+    // Toggle target drawer
+    const isOpen = targetDrawer.classList.contains('open');
+
+    if (isOpen) {
+        animateClose(targetDrawer);
+        setExpanded(targetBtn, false);
+    } else {
+        animateOpen(targetDrawer);
+        setExpanded(targetBtn, true);
+    }
+
+    // Always sync indicator AFTER state change
+    updateIndicator(targetDrawer, `ind-${targetId}`);
+}
+
+function closeAllDrawers() {
+    document.querySelectorAll('.drawer-pane.open').forEach(drawer => {
+        animateClose(drawer);
+    });
+
+    document.querySelectorAll('[aria-expanded="true"]').forEach(btn => {
+        btn.setAttribute('aria-expanded', 'false');
+    });
+
+    document.querySelectorAll('.indicator').forEach(ind => {
+        ind.textContent = '+';
+    });
+}
+
+function closeAllOtherDrawers(exceptDrawer) {
+    document.querySelectorAll('.drawer-pane.open').forEach(drawer => {
+        if (drawer !== exceptDrawer) {
+            animateClose(drawer);
+        }
+    });
+
+    document.querySelectorAll('[aria-expanded="true"]').forEach(btn => {
+        const controls = btn.getAttribute('aria-controls');
+        const drawer = document.getElementById(controls);
+        if (drawer !== exceptDrawer) {
+            btn.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    document.querySelectorAll('.indicator').forEach(ind => {
+        ind.textContent = '+';
+    });
+}
+
+document.addEventListener('click', (e) => {
+    const clickedSession = e.target.closest('.session');
+    const clickedControl = e.target.closest('button, a, .action-panel, #backToTopBtn');
+
+    // If click is inside a session or a UI control, ignore
+    if (clickedSession || clickedControl) return;
+
+    closeAllDrawers();
+});
+</script> 
+</body>
