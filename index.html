@@ -898,20 +898,21 @@ function togglePanelBio(panelId, bioId) {
     const btn = document.querySelector(`[aria-controls="${bioId}"]`);
     const indicator = document.getElementById(`ind-${bioId}`);
 
-    // close other bios in SAME panel only
-    document
-        .querySelectorAll(`#${panelId} .drawer-pane.open`)
-        .forEach(drawer => {
-            if (drawer.id !== bioId) {
-                animateClose(drawer);
+    // Find the session container (THIS is the correct scope)
+    const session = target.closest('.session');
 
-                const b = document.querySelector(`[aria-controls="${drawer.id}"]`);
-                const i = document.getElementById(`ind-${drawer.id}`);
+    // Close other open bios inside THIS session only
+    session.querySelectorAll('.drawer-pane.bio-pane.open').forEach(drawer => {
+        if (drawer.id !== bioId) {
+            animateClose(drawer);
 
-                if (b) b.setAttribute("aria-expanded", "false");
-                if (i) i.textContent = "+";
-            }
-        });
+            const otherBtn = document.querySelector(`[aria-controls="${drawer.id}"]`);
+            const otherIndicator = document.getElementById(`ind-${drawer.id}`);
+
+            if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
+            if (otherIndicator) otherIndicator.textContent = "+";
+        }
+    });
 
     const isOpen = target.classList.contains("open");
 
