@@ -632,41 +632,34 @@ rawSlots.forEach((slot) => {
 	} else if (slot.type === "panel") {
     sessionDiv.className = 'session special-block';
 
-    const internalSlotId = presentationCounter++;
+    const panelId = `panel-${presentationCounter++}`;
 
-    const panelHtml = slot.panelists.map((p, i) => `
-        <div style="margin-bottom: 1rem;">
+    const panelHtml = slot.panelists.map((p, i) => {
+        const bioId = `${panelId}-bio-${i}`;
+
+        return `
             <button class="presenter-btn"
-                onclick="toggleDrawer('${internalSlotId}-p${i}', 'bio')"
+                onclick="togglePanelBio('${panelId}', '${bioId}')"
                 aria-expanded="false"
-                aria-controls="bio-${internalSlotId}-p${i}">
-                
+                aria-controls="${bioId}">
                 <p class="presenter">
                     <span class="presenter-name">
-                        ${p.name} <span style="font-weight:400; color:var(--text-muted);">
-                        (${p.cohort})
-                        </span>
+                        ${p.name} (${p.cohort})
                     </span>
                 </p>
+                <span class="indicator" id="ind-${bioId}">+</span>
+            </button>
 
-				<span class="indicator" id="ind-bio-${internalSlotId}-p${i}">
-			</button>
-
-            <div id="bio-${internalSlotId}-p${i}" class="drawer-pane bio-pane">
+            <div id="${bioId}" class="drawer-pane bio-pane">
                 <div class="section-title">Bridge Biography</div>
                 <p class="bio-text">${p.bio}</p>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join("");
 
     sessionDiv.innerHTML = `
         <span class="time">${slot.display}</span>
-
-        <h2 class="static-title"
-            style="color: var(--columbia-primary); font-size: 1.15rem; font-weight: 700;">
-            ${slot.title}
-        </h2>
-
+        <h2 class="static-title">${slot.title}</h2>
         ${panelHtml}
     `;
     } else if (slot.type === "closing") { 
@@ -898,6 +891,39 @@ function toggleDrawer(slotNum, type) {
 
     // Always sync indicator AFTER state change
     updateIndicator(targetDrawer, `ind-${targetId}`);
+}
+
+function togglePanelBio(panelId, bioId) {
+    const target = document.getElementById(bioId);
+    const btn = document.querySelector(`[aria-controls="${bioId}"]`);
+    const indicator = document.getElementById(`ind-${bioId}`);
+
+    // close other bios in SAME panel only
+    document
+        .querySelectorAll(`#${panelId} .drawer-pane.open`)
+        .forEach(drawer => {
+            if (drawer.id !== bioId) {
+                animateClose(drawer);
+
+                const b = document.querySelector(`[aria-controls="${drawer.id}"]`);
+                const i = document.getElementById(`ind-${drawer.id}`);
+
+                if (b) b.setAttribute("aria-expanded", "false");
+                if (i) i.textContent = "+";
+            }
+        });
+
+    const isOpen = target.classList.contains("open");
+
+    if (isOpen) {
+        animateClose(target);
+        btn.setAttribute("aria-expanded", "false");
+        indicator.textContent = "+";
+    } else {
+        animateOpen(target);
+        btn.setAttribute("aria-expanded", "true");
+        indicator.textContent = "−";
+    }
 }
 
 function closeAllDrawers() {
