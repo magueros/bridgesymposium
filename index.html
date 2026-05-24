@@ -428,7 +428,7 @@ const rawSlots = [
         display: "11:30 AM - 12:00 PM", 
         type: "special", 
         title: "Keynote Presentation: Bridge Building for the Future in a Time of Institutional Retreat", 
-        speaker: "Professor Keivan Stassun, Vanderbilt University", 
+        speaker: "Prof. Keivan Stassun, Vanderbilt University", 
         bioLink: "https://macfound.org",
         bio: "Dr. Keivan Stassun is a Professor of Physics and Astronomy at Vanderbilt University with a distinguished career in stellar astrophysics, NASA mission science, and academic leadership, notably as founding director of the Fisk-Vanderbilt Bridge Program. A Fellow of the American Association for the Advancement of Science (AAAS), American Astronomical Society, and American Physical Society, he has mentored over 30 PhDs, founded the Center for Autism & Innovation, and received numerous honors, including the AAAS Mentor of the Year and the Presidential Award for Excellence in Science and Engineering Mentoring."
     }, 
@@ -472,7 +472,7 @@ const rawSlots = [
         display: "01:45 PM - 02:00 PM", 
         type: "talk", 
         title: "Searching for Effective and Equitable Policy Solutions for the Overdose Crisis", 
-        speaker: "Professor John Pamplin II, Cohort 3", 
+        speaker: "Prof. John Pamplin II, Cohort 3", 
         bio: "John is originally from Yellow Springs, Ohio. He attended Morehouse College, in Atlanta, Georgia, where he received his B.S. in biology in 2010. As a member of the John H. Hopps Jr. Research Scholars Program, which is funded by the Department of Defense, John worked with Daniel Hummer at Morehouse, investigating the role of gamma-aminobutyric acid (GABA) in light-induced phase shifts in hamsters. Additionally, John spent the summer of 2009 in the laboratory of Ted Garland Jr. at the University of California, Riverside, studying sexual dimorphism in the pelvises of a group of mice selectively bred for voluntary wheel running. As a Bridge scholar, John studied circadian rhythms. His work focused on the role of the suprachiasmatic nucleus (SCN) in the regulation of sex hormones. Specifically, he was looking for sex differences in the circadian regulation of the endocrine pathway responsible for sex hormone release in hamsters.", 
         bioLink: "https://www.publichealth.columbia.edu/profile/john-pamplin-ii-phd", 
         abstract: "The ongoing overdose crisis has been a pressing public health issue for over two decades. Though the early phases of the overdose crisis were characterized as predominately impacting white people, since 2016, the greatest increases in fatal overdose rates have been experienced by Black people, primarily due to the increased prominence of synthetic opioids. Drug harm reduction laws, such as overdose Good Samaritan laws and naloxone access laws, are a class of state-level policy interventions that may be able to reduce overdose mortality; however, a number of methodological challenges have hindered our ability to assess the effectiveness of these laws, and in particular, whether their impacts have been experienced equitably. This talk will discuss a novel approach to overcome some of the methodological challenges of traditional methods for evaluating the effects of drug harm reduction laws. To do so, we will highlight findings from an ongoing study that through this approach, aims to estimate the effects of enacted harm reduction law provisions to determine which set of provisions are best suited to equitably intervene against the overdose crisis." 
@@ -545,7 +545,7 @@ const rawSlots = [
         }
     ]
 },
-    { start: "16:00", end: "16:30", display: "04:00 PM - 04:30 PM", type: "closing", title: "Closing Remarks", speakers: [ { name: "Professor Dima Amso", link: "https://psychology.columbia.edu/content/dima-amso" }, { name: "Professor Dennis Mitchell", link: "https://www.dental.columbia.edu/profile/dennis-mitchell-dds" }, { name: "Professor Marcel Agüeros", link: "https://www.astro.columbia.edu/content/marcel-agueros" } ] }     
+    { start: "16:00", end: "16:30", display: "04:00 PM - 04:30 PM", type: "closing", title: "Closing Remarks", speakers: [ { name: "Prof. Dima Amso", link: "https://psychology.columbia.edu/content/dima-amso" }, { name: "Prof. Dennis Mitchell", link: "https://www.dental.columbia.edu/profile/dennis-mitchell-dds" }, { name: "Prof. Marcel Agüeros", link: "https://www.astro.columbia.edu/content/marcel-agueros" } ] }     
 ]; 
 
 // Render schedule and update UI functions
@@ -571,7 +571,7 @@ rawSlots.forEach((slot) => {
             <span class="time">${slot.display}</span> 
             <h2 class="static-title" style="color: var(--columbia-primary); font-size: 1.1rem; font-weight: 600;">${slot.title}</h2> 
             <p class="presenter" style="padding-top: 0.25rem;"><span class="presenter-name">  
-		<a href="https://www.chem.columbia.edu/content/ruben-l-gonzalez-jr" target="_blank" class="presenter-link">Professor Ruben Gonzalez Jr.</a> and <a href="https://www.astro.columbia.edu/content/marcel-agueros" target="_blank" class="presenter-link">Professor Marcel Agüeros</a> 
+		<a href="https://www.chem.columbia.edu/content/ruben-l-gonzalez-jr" target="_blank" class="presenter-link">Prof. Ruben Gonzalez Jr.</a> and <a href="https://www.astro.columbia.edu/content/marcel-agueros" target="_blank" class="presenter-link">Prof. Marcel Agüeros</a> 
             </span> </p> 
         `; 
     } else if (slot.type === "memorial") {
