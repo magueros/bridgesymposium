@@ -693,7 +693,7 @@ rawSlots.forEach((slot) => {
         const bioTextContent = slot.bio ? slot.bio : `Professional background details, group composition, or organizational affiliations associated with this slot segment.`; 
         
         // Dynamic drawer section header determination logic 
-        const bioSectionHeader = (slot.start >= "09:15") ? "Bridge Biography" : "Biography"; 
+        const bioSectionHeader = (slot.start = "11:30") ? "Bridge Biography" : "Biography"; 
         
         
         sessionDiv.innerHTML = ` 
