@@ -428,6 +428,7 @@ const rawSlots = [
         display: "11:30 AM - 12:00 PM", 
         type: "special", 
 	    hideAbstract: true,
+		bioLabel: "Biography",
 	    title: "Keynote Presentation: Bridge Building for the Future in a Time of Institutional Retreat", 
         speaker: "Prof. Keivan Stassun, Vanderbilt University", 
         bioLink: "https://macfound.org",
@@ -694,8 +695,10 @@ rawSlots.forEach((slot) => {
         const bioTextContent = slot.bio ? slot.bio : `Professional background details, group composition, or organizational affiliations associated with this slot segment.`; 
         
         // Dynamic drawer section header determination logic 
-        const bioSectionHeader = (slot.start = "11:30") ? "Bridge Biography" : "Biography"; 
-        
+		const bioSectionHeader = slot.bioLabel
+    ? slot.bioLabel
+    : ((slot.start >= "09:15") ? "Bridge Biography" : "Biography");
+       
         
         sessionDiv.innerHTML = ` 
 ${!slot.hideAbstract ? `
