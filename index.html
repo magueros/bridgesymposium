@@ -427,7 +427,8 @@ const rawSlots = [
         end: "12:00", 
         display: "11:30 AM - 12:00 PM", 
         type: "special", 
-        title: "Keynote Presentation: Bridge Building for the Future in a Time of Institutional Retreat", 
+	    hideAbstract: true,
+	    title: "Keynote Presentation: Bridge Building for the Future in a Time of Institutional Retreat", 
         speaker: "Prof. Keivan Stassun, Vanderbilt University", 
         bioLink: "https://macfound.org",
         bio: "Dr. Keivan Stassun is a Professor of Physics and Astronomy at Vanderbilt University with a distinguished career in stellar astrophysics, NASA mission science, and academic leadership, notably as founding director of the Fisk-Vanderbilt Bridge Program. A Fellow of the American Association for the Advancement of Science (AAAS), American Astronomical Society, and American Physical Society, he has mentored over 30 PhDs, founded the Center for Autism & Innovation, and received numerous honors, including the AAAS Mentor of the Year and the Presidential Award for Excellence in Science and Engineering Mentoring."
@@ -697,15 +698,27 @@ rawSlots.forEach((slot) => {
         
         
         sessionDiv.innerHTML = ` 
-            <span class="time">${slot.display}</span> 
-            <button class="title-btn" onclick="toggleDrawer('${internalSlotId}', 'abstract')" aria-expanded="false" aria-controls="abstract-${internalSlotId}"> 
-                <h2 class="title">${titleText}</h2> 
-                <span class="indicator" id="ind-abstract-${internalSlotId}">+</span> 
-            </button> 
-            <div id="abstract-${internalSlotId}" class="drawer-pane abstract-pane"> 
-                <div class="section-title">Abstract</div> 
-                <p class="abstract-text">${abstractTextContent}</p> 
-            </div>         
+${!slot.hideAbstract ? `
+    <button class="title-btn"
+        onclick="toggleDrawer('${internalSlotId}', 'abstract')"
+        aria-expanded="false"
+        aria-controls="abstract-${internalSlotId}">
+
+        <h2 class="title">${titleText}</h2>
+
+        <span class="indicator" id="ind-abstract-${internalSlotId}">+</span>
+    </button>
+
+    <div id="abstract-${internalSlotId}" class="drawer-pane abstract-pane">
+        <div class="section-title">Abstract</div>
+        <p class="abstract-text">${abstractTextContent}</p>
+    </div>
+` : `
+    <h2 class="static-title"
+        style="margin-top:0.5rem; margin-bottom:0.5rem;">
+        ${titleText}
+    </h2>
+`}
             <button class="presenter-btn" onclick="toggleDrawer('${internalSlotId}', 'bio')" aria-expanded="false" aria-controls="bio-${internalSlotId}"> 
                 <p class="presenter"><span class="presenter-name">${speakerHtml}</span></p> 
                 <span class="indicator" id="ind-bio-${internalSlotId}">+</span> 
